@@ -131,3 +131,10 @@ body {
   background: #e2e8f0;
   color: #334155;
 }
+
+/* Повторный клик убирает зачёркивание  
+Одиночный клик по тексту задачи зачёркивает её */
+
+.completed span {
+  text-decoration: line-through;
+}

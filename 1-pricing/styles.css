@@ -34,25 +34,34 @@ body {
 
 .plans {
   display: flex;
-  flex-direction: column;
+  /* Удалено: ломало отображение блока
+  flex-direction: column; */
   justify-content: center;
   align-items: stretch;
-  gap: 0;
   max-width: 960px;
   margin: 0 auto;
+  /* Добавлено: между карточками промежуток 24px; */
+  gap: 24px;
+
 }
 
 .plan {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 0;
-  padding: 0;
+  border-radius: 12px;
+  /*Углы скруглены на 12px; */
   width: 280px;
   text-align: center;
+  /* Добавлено: Внутренние отступы карточки: 32px сверху и снизу, 24px слева и справа; */
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  /* Добавлено: Кнопки "Выбрать" расположены на одной высоте у всех карточек  */
 }
 
 .plan--featured {
-  border: 2px solid transparent;
+  border: 2px solid #2563eb;
+  /* Добавлено: цвет #2563eb, Убрано transparent  */
   box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
 }
 
@@ -64,7 +73,8 @@ body {
 .price {
   font-size: 40px;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
+  /* Добавлено: Цена тёмная и контрастная, цвет #0f172a  */
   margin-bottom: 20px;
 }
 
@@ -75,18 +85,22 @@ body {
 }
 
 .features {
+  flex-grow: 1;
+  /* Добавлено: Кнопки "Выбрать" расположены на одной высоте у всех карточек  */
   list-style: none;
   margin-bottom: 24px;
   text-align: left;
 }
 
 .features li {
-  padding: 0;
+  padding: 6px 0;
+  /* Добавлено: вертикальный отступ 6px  */
   margin-bottom: 8px;
 }
 
 .features li::before {
-  content: "";
+  content: "✓";
+  /* Добавлено: галочка  */
   color: #22c55e;
   font-weight: 700;
   margin-right: 8px;
@@ -96,8 +110,9 @@ body {
   display: inline-block;
   padding: 12px 28px;
   border-radius: 8px;
-  background: #cbd5e1;
-  color: #ffffff;
+  background-color: #2563eb;
+  /* Добавлено: кнопки синим фоном  */
   text-decoration: none;
+  color: #ffffff;
   font-weight: 600;
 }

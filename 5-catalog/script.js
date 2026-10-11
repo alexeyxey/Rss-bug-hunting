@@ -9,6 +9,8 @@ const products = [
   { id: 8, name: "JBL Flip", price: 129, category: "audio" },
 ];
 
+
+
 const searchInput = document.getElementById("search");
 const categorySelect = document.getElementById("category");
 const sortSelect = document.getElementById("sort");
@@ -16,44 +18,57 @@ const resetBtn = document.getElementById("reset");
 const grid = document.getElementById("grid");
 const countEl = document.getElementById("count");
 
+const originalProducts = [...products]; // «По умолчанию» показывает товары в исходном порядке, как при загрузке страницы
 function getFiltered() {
-  let result = products;
-  const search = searchInput.value;
+  let result = [...originalProducts]; // «По умолчанию» показывает товары в исходном порядке, как при загрузке страницы, 	Поиск, категория и сортировка действуют одновременно (комбинируются)
+  const search = searchInput.value.toLowerCase();
   const category = categorySelect.value;
   const sort = sortSelect.value;
 
   if (search) {
-    result = result.filter((p) => p.name === search);
+
+    result = result.filter((p) => p.name.toLowerCase().includes(search, 0)); // Поиск находит товар по части названия
   }
 
   if (category !== "all") {
-    result = products.filter((p) => p.category !== category);
+
+    result = result.filter((p) => p.category === category); // Фильтр показывает только товары выбранной категории; «Все категории» — все товары
   }
 
-  if (sort === "asc") {
-    result.sort((a, b) => b.price - a.price);
-  } else if (sort === "desc") {
+  if (sort === "desc") { // «Цена ↓» — по убыванию
+    result.sort((a, b) => b.price - a.price); //
+  } else if (sort === "asc") { // «Цена ↑» сортирует по возрастанию цены
     result.sort((a, b) => a.price - b.price);
   }
+
 
   return result;
 }
 
 function render() {
+  grid.innerHTML = '' // После смены фильтра на странице только подходящие карточки, старые не остаются
   const items = getFiltered();
   items.forEach((p) => {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `<h3>${p.name}</h3><p class="cat">${p.category}</p><p class="price">$${p.price}</p>`;
+
     grid.appendChild(card);
   });
-  countEl.textContent = products.length;
+  countEl.textContent = items.length;
+  console.log(items)
 }
 
 searchInput.addEventListener("input", render);
 categorySelect.addEventListener("change", render);
 sortSelect.addEventListener("change", render);
 
-resetBtn.addEventListener("click", () => {
+resetBtn.addEventListener("click", () => { // «Сбросить фильтры» очищает поиск, сбрасывает категорию и сортировку и показывает все товары
   searchInput.value = "";
+  categorySelect.value = 'all';
+  sortSelect.value = 'default';
+  render()
 });
+
+
+render() // 	По умолчанию, без выбранных фильтров, показаны все товары
